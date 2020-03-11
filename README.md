@@ -61,5 +61,13 @@ Upper limit of the rule for generating random value
 
 
 ## Notes
-It is saving the process result in the bin/data/configs.txt file __after__ you close the program.
+It is saving the process configuration in the bin/data/configs.txt file __after__ you close the program.
+
+The images will be saved in /bin/images/ folder.
+
 The base values of inputs are gave by me for processing images I like, tweak it as you wish but don't go crazy, therefore you will break the program.
+
+## TODO
+- More tweak options
+- Color management
+- Real time rendering
