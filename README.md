@@ -12,47 +12,30 @@ Making computer art with generative algorithms
 Please read the very detailed installation instruction on the official [openFrameworks website](https://openframeworks.cc/download/) for your OS. However, if you develop in VS 2017, I suggest you to use solution platform __x64__, otherwise you should download and fix the _missing FreeImage.dll_ common problem. It occurs only in __Win32__ mode. Also, disabling Automatic Precompiled Header is highly recommended on notebooks with small storage, instructions in the guide too.
 
 ## Usage:
-> Width
-
+__Width__
 Image width in pixels
 
-
-> Height
-
+__Height__
 Image height in pixels
 
-
-> Resolution
-
+__Resolution__
 Image sample(s) detail
 
-
-> Noise seed
-
+__Noise seed__
 For getNoise() funciton, it gives some extra simplicity or more details based on the value
 
-
-> Gaussian noise
-
+__Gaussian noise__
 For getNoise() funciton, it gives some extra simplicity or more details based on the value
 
-
-> Coordinate scale
-
+__Coordinate scale__
 Scale of the sample(s) on the image, less number results less scale, large number results large scale of sample(s)
 
-
-> Rules count
-
+__Rules count__
 Pre-setup for states, less number results less complex sample(s), large number results more complex sample(s)
 
-
-> Rules - minimum value
-
+__Rules - minimum value__
 Lower limit of the rule for generating random value
 
-
-> Rules - maximum value
-
+__Rules - maximum value__
 Upper limit of the rule for generating random value
 
