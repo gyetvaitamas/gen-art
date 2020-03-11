@@ -13,6 +13,7 @@ Please read the very detailed installation instruction on the official [openFram
 
 ## Usage:
 > Width
+
 Image width in pixels
 
 > Height
