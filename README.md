@@ -13,29 +13,46 @@ Please read the very detailed installation instruction on the official [openFram
 
 ## Usage:
 __Width__
+
 Image width in pixels
 
+
 __Height__
+
 Image height in pixels
 
+
 __Resolution__
+
 Image sample(s) detail
 
+
 __Noise seed__
+
 For getNoise() funciton, it gives some extra simplicity or more details based on the value
+
 
 __Gaussian noise__
+
 For getNoise() funciton, it gives some extra simplicity or more details based on the value
 
+
 __Coordinate scale__
+
 Scale of the sample(s) on the image, less number results less scale, large number results large scale of sample(s)
 
+
 __Rules count__
+
 Pre-setup for states, less number results less complex sample(s), large number results more complex sample(s)
 
+
 __Rules - minimum value__
+
 Lower limit of the rule for generating random value
 
+
 __Rules - maximum value__
+
 Upper limit of the rule for generating random value
 
