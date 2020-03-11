@@ -9,7 +9,7 @@ Making computer art with generative algorithms
 - Windows 10 Pro (64-bit 1909)
 
 ## Purpose of re-thinking
-In the original idea, the program generates almost everything based on random numbers, which results some very nice or very bad images. Sometimes I got really fantastic samples with good random numbers and I wondered how can I reproduce again the image. In the beginning I just sent out the values to the console, later I needed a panel where I can set up manually and test continuously the result. 
+In the original idea, the program generates almost everything based on random numbers, which results some very nice or very bad images. Sometimes I got really fantastic samples with good random numbers and I wondered how can I reproduce again the image. In the beginning I just sent out the values to the console, later I needed a panel where I can set up manually and test continuously the result.
 
 ## Installation:
 Please read the very detailed installation instruction on the official [openFrameworks website](https://openframeworks.cc/download/) for your OS. However, if you develop in VS 2017, I suggest you to use solution platform __x64__, otherwise you should download and fix the _missing FreeImage.dll_ common problem. It occurs only in __Win32__ mode. Also, disabling Automatic Precompiled Header is highly recommended on notebooks with small storage, instructions in the guide too.
@@ -59,3 +59,7 @@ __Rules - maximum value__
 
 Upper limit of the rule for generating random value
 
+
+## Notes
+It is saving the process result in the bin/data/configs.txt file __after__ you close the program.
+The base values of inputs are gave by me for processing images I like, tweak it as you wish but don't go crazy, therefore you will break the program.
