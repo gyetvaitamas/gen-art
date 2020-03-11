@@ -69,5 +69,6 @@ The base values of inputs are gave by me for processing images I like, tweak it 
 
 ## TODO
 - More tweak options
+- Add "Randomize" button
 - Color management
 - Real time rendering
