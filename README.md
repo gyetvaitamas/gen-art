@@ -1,4 +1,3 @@
-<p align="center"># gen-art</p>
 <p align="center"><img src="https://raw.githubusercontent.com/gyetvaitamas/gen-art/master/bin/images/add875d4.jpg"></p>
 <p align="center">Making computer art with generative algorithms</p>
 
