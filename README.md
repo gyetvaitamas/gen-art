@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/gyetvaitamas/gen-art/master/bin/images/add875d4.jpg"></p>
+
 # gen-art
 Making computer art with generative algorithms
 ###### This is a re-thinking of [dvalim/art-automata](https://github.com/dvalim/art-automata) _cell_ project.
