@@ -1,8 +1,6 @@
 <p align="center"><img src="https://raw.githubusercontent.com/gyetvaitamas/gen-art/master/bin/images/add875d4.jpg"></p>
 <p align="center">Making computer art with generative algorithms</p>
 
-###### This is a re-thinking of [dvalim/art-automata](https://github.com/dvalim/art-automata) _cell_ project.
-
 ## This project was built with
 - [Visual Studio 2017](https://www.visualstudio.com/thank-you-downloading-visual-studio/?sku=Community&rel=15)
 - [openFrameworks v0.11.0](https://openframeworks.cc/versions/v0.11.0/of_v0.11.0_vs2017_release.zip)
@@ -10,6 +8,7 @@
 - Windows 10 Pro (64-bit 1909)
 
 ## Purpose of re-thinking
+###### Re-thinking [dvalim/art-automata](https://github.com/dvalim/art-automata) _cell_ project.
 In the original idea, the program generates almost everything based on random numbers, which results some very nice or very bad images. Sometimes I got really fantastic samples with good random numbers and I wondered how can I reproduce again the image. In the beginning I just sent out the values to the console, later I needed a panel where I can set up manually and test continuously the result.
 
 ## Installation
