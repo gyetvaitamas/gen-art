@@ -14,6 +14,8 @@ In the original idea, the program generates almost everything based on random nu
 ## Installation
 Please read the very detailed installation instruction on the official [openFrameworks website](https://openframeworks.cc/download/) for your OS. However, if you develop in VS 2017, I suggest you to use solution platform __x64__, otherwise you should download and fix the _missing FreeImage.dll_ common problem. It occurs only in __Win32__ mode. Also, disabling Automatic Precompiled Header is highly recommended on notebooks with small storage, instructions in the guide too.
 
+__Tip__: Easiest way to build a pre-made project (like this), just use projectGenerator.exe (of_v0.11.0_vs2017_release\projectGenerator-vs), load the project folder, click on Generate, then you can open it in VS.
+
 ## Usage
 __Width__
 
