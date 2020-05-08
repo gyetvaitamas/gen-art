@@ -16,6 +16,8 @@ Please read the very detailed installation instruction on the official [openFram
 
 __Tip__: Easiest way to build a pre-made project (like this), just use projectGenerator.exe (of_v0.11.0_vs2017_release\projectGenerator-vs), load the project folder, click on Generate, then you can open it in VS.
 
+<p align="center"><img src="https://raw.githubusercontent.com/gyetvaitamas/gen-art/master/projectGenerator.png"></p>
+
 ## Usage
 __Width__
 
