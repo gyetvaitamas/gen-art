@@ -19,47 +19,47 @@ __Tip__: Easiest way to build a pre-made project (like this), just use projectGe
 ## Usage
 __Width__
 
-Image width in pixels
+Image width in pixels.
 
 
 __Height__
 
-Image height in pixels
+Image height in pixels.
 
 
 __Resolution__
 
-Image sample(s) detail
+Image resolutuion.
 
 
 __Noise seed__
 
-For getNoise() funciton, it gives some extra simplicity or more details based on the value
+For getNoise() funciton, it gives some extra simplicity or more details based on the value.
 
 
 __Gaussian noise__
 
-For getNoise() funciton, it gives some extra simplicity or more details based on the value
+For getNoise() funciton, it gives some extra simplicity or more details based on the value.
 
 
 __Coordinate scale__
 
-Scale of the sample(s) on the image, less number results less scale, large number results large scale of sample(s)
+Scale of the sample(s) on the image, less number results less scale, large number results large scale of sample(s).
 
 
 __Rules count__
 
-Pre-setup for states, less number results less complex sample(s), large number results more complex sample(s)
+Pre-setup for states, less number results less complex sample(s), large number results more complex sample(s).
 
 
 __Rules - minimum value__
 
-Lower limit of the rule for generating random value
+Lower limit of the rule for generating random value.
 
 
 __Rules - maximum value__
 
-Upper limit of the rule for generating random value
+Upper limit of the rule for generating random value.
 
 
 ## Notes
@@ -73,4 +73,4 @@ The base values of inputs are gave by me for processing images I like, tweak it 
 - More tweak options
 - Add "Randomize" button
 - Color management
-- Real time rendering
+- Real time rendering, animation
