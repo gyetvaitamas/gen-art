@@ -4,6 +4,7 @@
 ## This project was built with
 - [Visual Studio 2017](https://www.visualstudio.com/thank-you-downloading-visual-studio/?sku=Community&rel=15)
 - [openFrameworks v0.11.0](https://openframeworks.cc/versions/v0.11.0/of_v0.11.0_vs2017_release.zip)
+- [ofxGui addon for GUI](https://openframeworks.cc/documentation/ofxGui/)
 - [K-Lite Codec Pack - Version 12.1.0 Full April 18th 2016](http://filehippo.com/download_klite_codec_pack/67445/)
 - Windows 10 Pro (64-bit 1909)
 
