@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<group>
+	<Width__px_>4000</Width__px_>
+	<Heigth__px_>4000</Heigth__px_>
+	<Resolution>1000</Resolution>
+	<Noise_seed>1000</Noise_seed>
+	<Coordinate_scale>15</Coordinate_scale>
+	<Gaussian_noise>0.0001</Gaussian_noise>
+	<Rules_count>24</Rules_count>
+	<Rules_-_minimum_value>150</Rules_-_minimum_value>
+	<Rules_-_maximum_value>200</Rules_-_maximum_value>
+</group>

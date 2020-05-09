@@ -23,7 +23,8 @@ class ofApp : public ofBaseApp{
 		ofxPanel gui;
 		ofImage backgroundImage;
 		ofxButton processButton;
-		ofxLabel label;
+		ofxButton hardRandomizeButton;
+		ofxToggle predefinedRules;
 		ofxIntField widthField;
 		ofxIntField heightField;
 		ofxIntField resolutionField;

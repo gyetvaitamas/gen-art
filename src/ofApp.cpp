@@ -1,3 +1,15 @@
+/*
+	#############################################################
+    #															#
+	#	gen-art on GitHub:										#
+	#	https://github.com/gyetvaitamas/gen-art					#
+	#															#
+	#	Original idea / credit:									#
+	#	https://github.com/dvalim/art-automata					#
+	#															#
+	#############################################################
+*/
+
 #include "ofApp.h"
 #include <random>
 
@@ -5,7 +17,8 @@ ofFbo buffer;
 std::string seedstring;
 std::mt19937 engine;
 
-// TODO: escape it from here. Useless, as it has user input below, however width and height should be constant for states[width][height]. RIP
+// These could be changed on the panel, however width and height should be constant and to be set here for states[width][height]
+// These are also the default width/height values if you click on the refresh button on the panel
 const int width = 4000;
 const int height = 4000;
 int states[width][height];
@@ -16,7 +29,7 @@ double gaussian(double mean, double deviation) {
     return nd(engine);
 }
 
-// Don't-touch-it part, getting states 
+// Getting states
 int getState(int n, int x, int y, int _res) {
     int l = 0, m, r = 0;
 	int res = _res;
@@ -28,8 +41,7 @@ int getState(int n, int x, int y, int _res) {
     return (n >> pos) & 1;
 }
 
-// Make some noise
-// TODO: moar tweak options here
+// Making some noise
 double getNoise(int _x, int _y, int _res, double _noise_seed, double _coord_scale, double _gaussian_noise) {
 	int res = _res;
     double x = _x, y = _y;
@@ -44,6 +56,7 @@ double getNoise(int _x, int _y, int _res, double _noise_seed, double _coord_scal
     return noise;
 }
 
+// Saving to file
 void saveSession() {
 	ofPixels pix;
 	buffer.readToPixels(pix);
@@ -51,125 +64,196 @@ void saveSession() {
 }
 
 void ofApp::setup() {
-	// "Settings" window size
-	int windowWidth = 300;
-	int windowHeight = 250;
-	ofSetWindowShape(windowWidth, windowHeight);
+	// Setting up GUI panel
+	gui.setup("Config panel");
 
-	gui.setup();
-
-	// Panel width and positioning
-	gui.setDefaultWidth(windowWidth);
-	gui.setPosition(0, 0);
+	int windowWidth = 300;															// Set window width
+	int windowHeight = 300;															// Set window height
+	ofSetWindowShape(windowWidth, windowHeight);									// Set window shape
+	gui.setDefaultWidth(windowWidth);												// Set panel width = window width, so it's fill the window properly
+	gui.setPosition(0, 0);															// Set panel position to zero (left upper corner)
+	ofSetColor(ofColor::white);														// Set panel color
 
 	// Adding elements to the panel
-	gui.add(label.setup("", "Settings"));
-	gui.add(widthField.setup("Width (px)", 4000, 0, 12000));
-	gui.add(heightField.setup("Heigth (px)", 4000, 0, 12000));
-	gui.add(resolutionField.setup("Resolution", 1000, 0, 4000));
-	gui.add(noiseSeedField.setup("Noise seed", 1000, 0, 10000));
-	gui.add(coordScaleField.setup("Coordinate scale", 3, 1, 10000));
-	gui.add(gaussianNoiseField.setup("Gaussian noise", 0.0001, 0.000001, 0.1));
-	gui.add(rulesCountField.setup("Rules count", 24, 2, 100));
-	gui.add(rulesMinValueField.setup("Rules - minimum value", 150, 0, 256));
-	gui.add(rulesMaxValueField.setup("Rules - maximum value", 200, 0, 256));
-	gui.add(processButton.setup("<- Process image"));
+	gui.add(widthField.setup("Width (px)", 4000, 0, 12000));						// Image width in pixels. Might crash over 12,000 px!
+	gui.add(heightField.setup("Heigth (px)", 4000, 0, 12000));						// Image height in pixels. Might crash over 12,000 px!
+	gui.add(resolutionField.setup("Resolution", 1000, 0, 4000));					// Image resolutuion. The resolution value basically is how many square unit should be draw on the image. Try to find the best setting based on the width and height values.
+	gui.add(noiseSeedField.setup("Noise seed", 100, 0, 10000));						// For getNoise() funciton, it gives some extra simplicity or more details based on the value.
+	gui.add(coordScaleField.setup("Coordinate scale", 3, 1, 10000));				// Scale of the sample(s) on the image, less number results less scale, large number results large scale of sample(s).
+	gui.add(gaussianNoiseField.setup("Gaussian noise", 0.0001, 0.000001, 0.1));		// For getNoise() funciton, it gives some extra simplicity or more details based on the value.
+	gui.add(rulesCountField.setup("Rules count", 24, 2, 99));						// How many rules should be used, less number results less complex sample(s), large number results more complex sample(s).
+	gui.add(rulesMinValueField.setup("Rules - minimum value", 150, 0, 256));		// Lower limit of the rule for generating random value. Might result boring samples under value 150.
+	gui.add(rulesMaxValueField.setup("Rules - maximum value", 200, 0, 256));		// Upper limit of the rule for generating random value. Might result boring samples above value 200.
+	gui.add(predefinedRules.setup("<- Use pre-defined rules", false));				// Using the pre-defined rules what you adding in the source
+	gui.add(hardRandomizeButton.setup("<- Hard randomize"));						// Wildcard values. Might result bad / boring samples.
+	gui.add(processButton.setup("<- Process image"));								// Make the image and save to ..\bin\images\ folder
 
-	// Open config file for append text
-	configFile.open("configs.txt", ofFile::Append);
+	configFile.open("configs.txt", ofFile::Append);									// Open text file for logging
 }
 
 void ofApp::draw() {
-	// Panel color
-	ofSetColor(ofColor::white);
+	gui.draw();																		// Spawn the GUI panel
 
-	gui.draw();
+	// Hard randomization (randomizing every input)									//
+	if (hardRandomizeButton) {														//
+		noiseSeedField = ofRandom(0, 1000);											//
+		coordScaleField = ofRandom(1, 100);											//
+		gaussianNoiseField = ofRandom(0.000001, 0.1);								// Personalize randomization here
+		coordScaleField = ofRandom(1, 50);											//
+		rulesCountField = ofRandom(2, 99);											//
+		rulesMinValueField = ofRandom(150, 230);									//
+		rulesMaxValueField = ofRandom(230, 256);									//
+	}
 
-	// Process button fired, then
+	// Processing the image
 	if (processButton) {
-		// Generate seed
+		// Logging date/time
+		cout << "Date: \t\t\t" << ofGetTimestampString("%Y-%m-%d %r") << endl;
+		configFile << "Date: \t\t\t\t" << ofGetTimestampString("%Y-%m-%d %r") << endl;
+
+		// Generating seed
 		int seed = std::chrono::system_clock::now().time_since_epoch().count();
 		ofSeedRandom(seed);
 		engine.seed(seed);
 
-		// This will be the name of the image
+		// Generating the filename
 		std::stringstream sstream;
 		sstream << std::hex << seed;
 		seedstring = sstream.str();
-		cout << "Seed string: " << "\t" << seedstring <<endl;
-		configFile << "Seed string: " << "\t" << seedstring << endl;
+		cout << "Filename: \t\t" << seedstring << ".jpg" <<endl;
+		configFile << "Filename: \t\t\t" << seedstring << ".jpg" << endl;
 
-		// Set up dimensions and resolution of the image
+		// Setting up dimensions and resolution
 		int width = widthField;
 		int height = heightField;
 		buffer.allocate(width, height);
 		int res = resolutionField;
-		cout << "Dimensions: " << "\t" << width << "x" << height << "px (" << res << " resolution)" << endl;
-		configFile << "Dimensions: " << "\t" << width << "x" << height << "px (" << res << " resolution)" << endl;
+		cout << "Dimensions: \t\t" << width << "x" << height << "px (Resolution: " << res << ")" << endl;
+		configFile << "Dimensions: \t\t" << width << "x" << height << "px (Resolution: " << res << ")" << endl;
 
-		// Set up coordinate scale
+		// Setting up coordinate scale
 		double coord_scale = coordScaleField;
-		cout << "Coord. scale: " << "\t" << coord_scale << endl;
-		configFile << "Coord. scale: " << "\t" << coord_scale << endl;
+		cout << "Coord. scale: \t\t" << coord_scale << endl;
+		configFile << "Coord. scale: \t\t" << coord_scale << endl;
 
-		// Set up noise seed for getNoise() function
+		// Setting up noise seed for getNoise() function
 		double noise_seed = noiseSeedField;
-		cout << "Noise seed: " << "\t" << noise_seed << endl;
-		configFile << "Noise seed: " << "\t" << noise_seed << endl;
+		cout << "Noise seed: \t\t" << noise_seed << endl;
+		configFile << "Noise seed: \t\t" << noise_seed << endl;
 
-		// Set up guassian noise for getNoise() function
+		// Setting up guassian noise for getNoise() function
 		double gaussian_noise = gaussianNoiseField;
-		cout << "Gaussian noise:" << " " << gaussian_noise << endl;
-		configFile << "Gaussian noise:" << " " << gaussian_noise << endl;
+		cout << "Gaussian noise: \t" << gaussian_noise << endl;
+		configFile << "Gaussian noise: \t" << gaussian_noise << endl;
 
-		// Set up the number of rules
+		// Setting up the number of rules
 		int rules_count = rulesCountField;
 
-		// Rule minimum value
-		cout << "Rules min.: " << "\t" << rulesMinValueField << endl;
-		configFile << "Rules min.: " << "\t" << rulesMinValueField << endl;
+		// Setting up states
+		if (predefinedRules) {
+			// Preventing shape deformation and using pre-defined values. Minimizing randomization
+			cout << "Pre-defined rules: \t" << "Enabled... using pre-defined" << endl;
+			configFile << "Pre-defined rules: \t" << "Enabled... using pre-defined" << endl;
 
-		// Rule maximum value
-		cout << "Rules max.: " << "\t" << rulesMaxValueField << endl;
-		configFile << "Rules max.: " << "\t" << rulesMaxValueField << endl;
+			for (int x = 0; x < res; x++) states[x][0] = 0;
+			
+			// Populating rules with pre-defined ones
+			vector<int> rules = {
+				// Pre-defined rules should be added above:
+				172, 219, 233, 191, 174, 172, 213, 230, 180, 231, 230, 158, 218, 177, 190, 229, 203, 193, 201, 178, 226, 165, 171, 208, 199, 200, 203, 192, 209, 210, 233, 233, 197, 179, 233, 207, 224, 230, 214, 175, 193, 212, 166, 167, 207, 225, 199, 175, 176, 214, 225, 227, 191, 204, 171, 170, 198, 188, 214, 163, 159, 206, 193, 222, 189, 172, 170, 224, 200, 168, 165, 222, 201, 188, 179, 164, 226, 207, 183, 157, 164, 212, 164, 192, 225, 183, 230, 157, 233, 222, 203, 184, 157, 166, 166, 224
+			};
 
-		cout << "Rules (" << rules_count << "): " << endl;
-		configFile << "Rules (" << rules_count << "): " << endl;
+			// Ignoring the panel's rules count value, setting array size instead
+			rules_count = rules.size();
 
-		// Populate rules within the given interval
-		vector<int> rules = {
-			// If you want to use pre-generated rules, just write here, as example:
-			// 188, 162, 157, 195, 175, 198, 186, 154, 162, 190, 168, 174, 172, 158, 164, 150, 156, 150, 197, 187, 162, 178, 157, 158
-			// and comment this line below:
-			(int)ofRandom(rulesMinValueField, rulesMaxValueField)
-		};  //
-			// and also comment this line below:
-		for (int i = 1; i < rules_count; i++) rules.push_back(ofRandom(rulesMinValueField, rulesMaxValueField));
-		for (int i = 0; i < rules_count; i++) {
-			if (i == rules_count - 1) {
-				cout << rules.at(i) << endl << endl;
-				configFile << rules.at(i) << endl << endl;
-			} else {
-				cout << rules.at(i) << ", ";
-				configFile << rules.at(i) << ", ";
+			// Logging rules count
+			cout << "Rules count: \t\t" << rules_count << endl;
+			configFile << "Rules count: \t\t" << rules_count << endl;
+
+			// Logging rule minimum value
+			cout << "Rules min.: \t\t" << "n/a" << endl;
+			configFile << "Rules min.: \t\t" << "n/a" << endl;
+
+			// Logging rule maximum value
+			cout << "Rules max.: \t\t" << "n/a" << endl;
+			configFile << "Rules max.: \t\t" << "n/a" << endl;
+
+			// Logging the rules
+			cout << "Rules:" << endl;
+			configFile << "Rules:" << endl;
+			for (int i = 0; i < rules_count; i++) {
+				if (i == rules_count - 1) {
+					cout << rules.at(i) << endl << endl;
+					configFile << rules.at(i) << endl << endl;
+				}
+				else {
+					cout << rules.at(i) << ", ";
+					configFile << rules.at(i) << ", ";
+				}
 			}
+
+			// Populating states with the pre-defined rules
+			for (int y = 0; y < res; y++)
+				for (int x = 0; x < res; x++) {
+					double noise = getNoise(x, y, res, noise_seed, coord_scale, gaussian_noise);
+					int ind = (rules_count - 1) * noise;
+					states[x][y] = getState(rules[ind], x, y - 1, res);
+				}
+		} else {
+			// Giving more randomness
+			cout << "Pre-defined rules: \t" << "Disabled... using random values" << endl;
+			configFile << "Pre-defined rules: \t" << "Disabled... using random values" << endl;
+
+			for (int x = 0; x < res; x++) states[x][0] = (ofRandom(1) <= 0.5 ? 1 : 0);
+			
+			// Populating rules within the given interval
+			vector<int> rules = {
+				(int)ofRandom(rulesMinValueField, rulesMaxValueField)
+			};
+
+			for (int i = 1; i < rules_count; i++) rules.push_back(ofRandom(rulesMinValueField, rulesMaxValueField));
+
+			// Logging rules count
+			cout << "Rules count: \t\t" << rules_count << endl;
+			configFile << "Rules count: \t\t" << rules_count << endl;
+
+			// Logging rule minimum value
+			cout << "Rules min.: \t\t" << rulesMinValueField << endl;
+			configFile << "Rules min.: \t\t" << rulesMinValueField << endl;
+
+			// Logging rule maximum value
+			cout << "Rules max.: \t\t" << rulesMaxValueField << endl;
+			configFile << "Rules max.: \t\t" << rulesMaxValueField << endl;
+			
+			// Logging the rules
+			cout << "Rules:" << endl;
+			configFile << "Rules:" << endl;
+			for (int i = 0; i < rules_count; i++) {
+				if (i == rules_count - 1) {
+					cout << rules.at(i) << endl << endl;
+					configFile << rules.at(i) << endl << endl;
+				}
+				else {
+					cout << rules.at(i) << ", ";
+					configFile << rules.at(i) << ", ";
+				}
+			}
+
+			// Populating with the generated random rules
+			for (int y = 0; y < res; y++)
+				for (int x = 0; x < res; x++) {
+					double noise = getNoise(x, y, res, noise_seed, coord_scale, gaussian_noise);
+					int ind = (rules_count - 1) * noise;
+					states[x][y] = getState(rules[ind], x, y - 1, res);
+				}
 		}
 
-		// Set up states, keeping it random for uniqueness, for art
-		for (int x = 0; x < res; x++) states[x][0] = (ofRandom(1) <= 0.5 ? 1 : 0);
-		for (int y = 1; y < res; y++)
-			for (int x = 0; x < res; x++) {
-				double noise = getNoise(x, y, res, noise_seed, coord_scale, gaussian_noise);
-				int ind = (rules_count - 1) * noise;
-				states[x][y] = getState(rules[ind], x, y - 1, res);
-			}
+		// Image defaults
+		buffer.begin();																// Starting the buffer
+		ofBackground(255);															// Set image background color
+		ofSetColor(0);																// Set image foreground color
 
-		// Start buffer, set up background and foreground color of the image
-		buffer.begin();
-		ofBackground(255);
-		ofSetColor(0);
-
-		// Draw with the given instructions
+		// Drawing with the given setups
 		double cell_size = width / res;
 		for (double y = 0, y_ind = 0; y_ind < res; y += cell_size, y_ind++)
 			for (double x = 0, x_ind = 0; x_ind < res; x += cell_size, x_ind++) {
@@ -179,11 +263,11 @@ void ofApp::draw() {
 				}
 			}
 
-		// Close buffer, then save the session
-		buffer.end();
+		// Close the buffer, then save the session
+		buffer.end();																// Closing the buffer
 		cout << endl << endl;
 		configFile << endl << endl;
-		saveSession();
+		saveSession();																// Saving the image
 	}
 }
 
