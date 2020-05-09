@@ -65,6 +65,14 @@ __Rules - maximum value__
 
 Upper limit of the rule for generating random value.
 
+__Use pre-defined rules__
+
+Using the pre-defined rules what you adding in the source.
+
+__Hard randomize__
+
+Wildcard values, randomization feature. Might result bad / boring samples.
+
 
 ## Notes
 It is saving the process configuration in the bin/data/configs.txt file __after__ you close the program.
@@ -72,9 +80,10 @@ It is saving the process configuration in the bin/data/configs.txt file __after_
 The images will be saved in bin/images/ folder.
 
 The base values of inputs are gave by me for processing images I like, tweak it as you wish but don't go crazy, therefore you will break the program.
+Keep in mind that you should calculate the correct resolution value based on the width, height and the quality you want to achieve!
+A pre-defined rule can be anything between 1-256 and the rules count can be anything between 2-99.
 
 ## TODO
 - More tweak options
-- Add "Randomize" button
 - Color management
 - Real time rendering, animation

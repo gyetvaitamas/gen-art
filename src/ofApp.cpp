@@ -77,15 +77,15 @@ void ofApp::setup() {
 	// Adding elements to the panel
 	gui.add(widthField.setup("Width (px)", 4000, 0, 12000));						// Image width in pixels. Might crash over 12,000 px!
 	gui.add(heightField.setup("Heigth (px)", 4000, 0, 12000));						// Image height in pixels. Might crash over 12,000 px!
-	gui.add(resolutionField.setup("Resolution", 1000, 0, 4000));					// Image resolutuion. The resolution value basically is how many square unit should be draw on the image. Try to find the best setting based on the width and height values.
-	gui.add(noiseSeedField.setup("Noise seed", 100, 0, 10000));						// For getNoise() funciton, it gives some extra simplicity or more details based on the value.
-	gui.add(coordScaleField.setup("Coordinate scale", 3, 1, 10000));				// Scale of the sample(s) on the image, less number results less scale, large number results large scale of sample(s).
-	gui.add(gaussianNoiseField.setup("Gaussian noise", 0.0001, 0.000001, 0.1));		// For getNoise() funciton, it gives some extra simplicity or more details based on the value.
-	gui.add(rulesCountField.setup("Rules count", 24, 2, 99));						// How many rules should be used, less number results less complex sample(s), large number results more complex sample(s).
-	gui.add(rulesMinValueField.setup("Rules - minimum value", 150, 0, 256));		// Lower limit of the rule for generating random value. Might result boring samples under value 150.
-	gui.add(rulesMaxValueField.setup("Rules - maximum value", 200, 0, 256));		// Upper limit of the rule for generating random value. Might result boring samples above value 200.
+	gui.add(resolutionField.setup("Resolution", 1000, 0, 4000));					// Image resolutuion. The resolution value basically is how many square unit should be draw on the image. Try to find the best setting based on the width and height values
+	gui.add(noiseSeedField.setup("Noise seed", 100, 0, 10000));						// For getNoise() funciton, it gives some extra simplicity or more details based on the value
+	gui.add(coordScaleField.setup("Coordinate scale", 3, 1, 10000));				// Scale of the sample(s) on the image, less number results less scale, large number results large scale of sample(s)
+	gui.add(gaussianNoiseField.setup("Gaussian noise", 0.0001, 0.000001, 0.1));		// For getNoise() funciton, it gives some extra simplicity or more details based on the value
+	gui.add(rulesCountField.setup("Rules count", 24, 2, 99));						// How many rules should be used, less number results less complex sample(s), large number results more complex sample(s)
+	gui.add(rulesMinValueField.setup("Rules - minimum value", 150, 0, 256));		// Lower limit of the rule for generating random value. Might result boring samples under value 150
+	gui.add(rulesMaxValueField.setup("Rules - maximum value", 200, 0, 256));		// Upper limit of the rule for generating random value. Might result boring samples above value 200
 	gui.add(predefinedRules.setup("<- Use pre-defined rules", false));				// Using the pre-defined rules what you adding in the source
-	gui.add(hardRandomizeButton.setup("<- Hard randomize"));						// Wildcard values. Might result bad / boring samples.
+	gui.add(hardRandomizeButton.setup("<- Hard randomize"));						// Wildcard values. Might result bad / boring samples
 	gui.add(processButton.setup("<- Process image"));								// Make the image and save to ..\bin\images\ folder
 
 	configFile.open("configs.txt", ofFile::Append);									// Open text file for logging
