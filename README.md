@@ -9,7 +9,7 @@
 
 Tested on Windows 10 Pro 64-bit (1909)
 
-## Purpose of re-thinking
+## Motivation
 ###### Re-thinking [dvalim/art-automata](https://github.com/dvalim/art-automata) _cell_ project.
 In the original idea, the program generates almost everything based on random numbers, which results some very nice or very bad images. Sometimes I got really fantastic samples with good random numbers and I wondered how can I reproduce again the image. In the beginning I just sent out the values to the console, later I needed a panel where I can set up manually and test continuously the result.
 
